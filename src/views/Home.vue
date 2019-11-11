@@ -2,7 +2,7 @@
 	<div class="home">
 		<h1>Videos</h1>
 		<div class="video-container">
-			<div v-for="(video, index) in videos" :key="index">
+			<div v-for="video in videos" :key="video.id">
 				<router-link :to="{ name: 'video-watch' , params: {id: video.id} }">
 					<div class="video-box">
 						<img :src="video.thumbnail" alt />
@@ -21,10 +21,11 @@
 export default {
 	name: "home",
 	components: {},
-	data() {
-		return {
-			videos: this.$store.state.videos
-		};
+	// computed is an object cantaining methods that ret urn data
+	computed: {
+		videos() {
+			return this.$store.state.videos;
+		}
 	}
 };
 </script>

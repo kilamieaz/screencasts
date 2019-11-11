@@ -11,7 +11,11 @@
 <script>
 export default {
 	name: "app",
-	components: {}
+	components: {},
+	// mounted is a life hook executed after the intance gets mounted
+	mounted() {
+		this.$store.dispatch("loadVideos");
+	}
 };
 </script>
 
