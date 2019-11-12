@@ -9,6 +9,9 @@
 						<div>
 							<h3>{{ video.name }}</h3>
 							<div v-html="video.description"></div>
+							<span v-for="tag in video.tags" :key="tag.id">
+								<button class="tag-button">{{ tag.name }}</button>
+							</span>
 						</div>
 					</div>
 				</router-link>
@@ -17,15 +20,18 @@
 	</div>
 </template>
 
- <script>
+<script>
+import { mapState } from "vuex";
 export default {
 	name: "home",
 	components: {},
-	// computed is an object cantaining methods that ret urn data
+	// computed is an object containing methods that ret urn data
 	computed: {
-		videos() {
-			return this.$store.state.videos;
-		}
+		//map to state this.$store.state.videos;
+		...mapState(["videos"])
+		// videos() {
+		// 	return this.$store.state.videos;
+		// }
 	}
 };
 </script>

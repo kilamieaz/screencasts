@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<video-player class="video-player-box" ref="videoPlayer" :options="playerOptions"></video-player>
+		<span v-for="tag in video.tags" :key="tag.id">
+			<button class="tag-button">{{ tag.name }}</button>
+		</span>
 		<h1>{{ video.name}}</h1>
 		<div v-html="video.description"></div>
 	</div>
@@ -28,7 +31,7 @@ export default {
 				sources: [
 					{
 						type: "video/mp4",
-						src: this.video.videoUrl
+						src: this.video.video_url
 					}
 				],
 				poster: this.video.thumbnail
@@ -42,5 +45,6 @@ export default {
 <style>
 .video-player-box .video-js {
 	margin: auto;
+	height: 600px;
 }
 </style>

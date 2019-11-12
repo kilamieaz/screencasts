@@ -18,7 +18,7 @@ export default new Vuex.Store({
             commit
         }) {
             let response = await Api().get('/videos');
-            let videos = response.data.data.map(v => v.attributes);
+            let videos = response.data.data;
             commit('SET_VIDEOS', videos);
         }
     },
