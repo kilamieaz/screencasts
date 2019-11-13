@@ -14,7 +14,7 @@ export default {
 	components: {},
 	// mounted is a life hook executed after the intance gets mounted
 	mounted() {
-		this.$store.dispatch("loadVideos");
+		this.$store.dispatch("loadData");
 	}
 };
 </script>

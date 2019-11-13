@@ -2,7 +2,9 @@
 	<div>
 		<video-player class="video-player-box" ref="videoPlayer" :options="playerOptions"></video-player>
 		<span v-for="tag in video.tags" :key="tag.id">
-			<button class="tag-button">{{ tag.name }}</button>
+			<router-link :to="{ name: 'tag', params: { id: tag.id }}">
+				<button class="tag-button">{{ tag.name }}</button>
+			</router-link>
 		</span>
 		<h1>{{ video.name}}</h1>
 		<div v-html="video.description"></div>

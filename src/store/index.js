@@ -7,20 +7,32 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         videos: [],
+        tags: [],
     },
     mutations: {
         SET_VIDEOS(state, videos) {
             state.videos = videos;
+        },
+        SET_TAGS(state, tags) {
+            state.tags = tags;
         }
     },
     actions: {
-        async loadVideos({
+        async loadData({
             commit
         }) {
-            let response = await Api().get('/videos');
-            let videos = response.data.data;
+            let videosResponse = await Api().get('/videos');
+            let tagsResponse = await Api().get('/tags');
+            let videos = videosResponse.data.data;
+            let tags = tagsResponse.data.data;
             commit('SET_VIDEOS', videos);
+            commit('SET_TAGS', tags);
         }
     },
-    modules: {}
+    modules: {},
+    getters: {
+        getTag: state => id => {
+            return state.tags.find(tag => tag.id == id)
+        }
+    }
 });
