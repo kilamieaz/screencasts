@@ -21,12 +21,15 @@ export default new Vuex.Store({
         async loadData({
             commit
         }) {
-            let videosResponse = await Api().get('/videos');
-            let tagsResponse = await Api().get('/tags');
-            let videos = videosResponse.data.data;
-            let tags = tagsResponse.data.data;
-            commit('SET_VIDEOS', videos);
-            commit('SET_TAGS', tags);
+            // let videosResponse = await Api().get('/videos');
+            // let tagsResponse = await Api().get('/tags');
+            // let videos = videosResponse.data.data;
+            // let tags = tagsResponse.data.data;
+            // commit('SET_VIDEOS', videos);
+            // commit('SET_TAGS', tags);
+
+            await Api().get('/videos').then(response => commit('SET_VIDEOS', response.data.data));
+            await Api().get('/tags').then(response => commit('SET_TAGS', response.data.data));
         }
     },
     modules: {},
