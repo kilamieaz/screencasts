@@ -2,7 +2,7 @@
 	<v-container v-if="video">
 		<v-row>
 			<v-col md="9" cols="12">
-				<video-player ref="videoPlayer" :options="playerOptions"></video-player>
+				<video-player ref="videoPlayer" :options="playerOptions" @ended="markPlayed"></video-player>
 			</v-col>
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
