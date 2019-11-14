@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
-		<h1>Videos</h1>
-		<div class="video-container">
+		<div class="display-4 ma-4 d-flex justify-center">Videos</div>
+		<div class="d-flex flex-wrap">
 			<div v-for="video in videos" :key="video.id">
 				<ListVideo :video="video"></ListVideo>
 			</div>
