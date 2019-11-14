@@ -6,6 +6,10 @@
 			</v-col>
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
+				<div class="green--text" v-if="isPlayed">Played</div>
+				<div v-else>
+					<v-btn x-small @click="markPlayed">Mark Played</v-btn>
+				</div>
 				<div v-html="video.description"></div>
 				<span v-for="tag in video.tags" :key="tag.id">
 					<v-btn
@@ -23,16 +27,17 @@
 import "video.js/dist/video-js.css";
 
 import { videoPlayer } from "vue-video-player";
+import { mapState } from "vuex";
 export default {
 	components: {
 		videoPlayer
 	},
 	computed: {
+		...mapState(["playedVideos", "videos"]),
 		video() {
-			return this.$store.state.videos.find(
-				vid => vid.id == this.$route.params.id
-			);
+			return this.videos.find(vid => vid.id == this.$route.params.id);
 		},
+
 		playerOptions() {
 			return {
 				// videojs options
@@ -47,6 +52,14 @@ export default {
 				poster: this.video.thumbnail,
 				fluid: true
 			};
+		},
+		isPlayed() {
+			return this.playedVideos.includes(this.video.id);
+		}
+	},
+	methods: {
+		markPlayed() {
+			this.$store.dispatch("markPlayed", this.video.id);
 		}
 	}
 };
