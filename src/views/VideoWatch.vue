@@ -6,7 +6,14 @@
 			</v-col>
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
-				<div class="green--text" v-if="isPlayed">Played</div>
+				<div class="green--text" v-if="isPlayed">
+					<v-row>
+						<v-col cols="1">
+							<v-icon class="green--text" small>fas fa-check</v-icon>
+						</v-col>
+						<v-col cols="11">Played</v-col>
+					</v-row>
+				</div>
 				<div v-else>
 					<v-btn x-small @click="markPlayed">Mark Played</v-btn>
 				</div>
