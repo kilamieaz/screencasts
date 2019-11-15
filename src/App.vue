@@ -3,7 +3,7 @@
 		<v-app-bar app color="green" dark>
 			<v-toolbar-title class="headline text-uppercase">
 				<v-btn text to="/">Screencast</v-btn>
-				<v-btn text to="/video/create">Add Video</v-btn>
+				<v-btn text to="/admin/videos">Admin</v-btn>
 			</v-toolbar-title>
 
 			<v-spacer></v-spacer>

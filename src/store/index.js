@@ -28,6 +28,10 @@ export default new Vuex.Store({
         CREATE_VIDEO(state, video) {
             let videos = state.videos.concat(video);
             state.videos = videos;
+        },
+        DELETE_VIDEO(state, videoId) {
+            let videos = state.videos.filter(v => v.id != videoId);
+            state.videos = videos;
         }
     },
     actions: {
@@ -58,6 +62,14 @@ export default new Vuex.Store({
             let savedVideo = response.data.data;
             commit('CREATE_VIDEO', savedVideo);
             return savedVideo;
+        },
+        async deleteVideo({
+            commit
+        }, video) {
+            //delete video on server
+            await Api().delete('/videos', video.id);
+            //delete video in state
+            commit('DELETE_VIDEO', video.id)
         }
     },
     modules: {},
