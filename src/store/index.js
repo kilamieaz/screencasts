@@ -67,7 +67,7 @@ export default new Vuex.Store({
             commit
         }, video) {
             //delete video on server
-            await Api().delete('/videos', video.id);
+            await Api().delete('/videos/' + video.id);
             //delete video in state
             commit('DELETE_VIDEO', video.id)
         }
