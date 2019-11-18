@@ -32,6 +32,13 @@ export default new Vuex.Store({
         DELETE_VIDEO(state, videoId) {
             let videos = state.videos.filter(v => v.id != videoId);
             state.videos = videos;
+        },
+        EDIT_VIDEO(state, video) {
+            state.videos.forEach(v => {
+                if (v.id == video.id) {
+                    v = video;
+                }
+            })
         }
     },
     actions: {
@@ -67,9 +74,18 @@ export default new Vuex.Store({
             commit
         }, video) {
             //delete video on server
-            await Api().delete('/videos/' + video.id);
+            await Api().delete(`/videos/${video.id}`);
             //delete video in state
             commit('DELETE_VIDEO', video.id)
+        },
+        async editVideo({
+            commit
+        }, video) {
+            await Api().put(`/videos/${video.id}`, video)
+                .then(response => {
+                    commit('EDIT_VIDEO', response.data.data)
+                    return response.data.data;
+                });
         }
     },
     modules: {},

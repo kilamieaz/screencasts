@@ -5,6 +5,7 @@ import VideoWatch from "../views/VideoWatch.vue";
 import VideoCreate from "../views/VideoCreate.vue";
 import VideoByTag from "../views/VideoByTag.vue";
 import AdminVideoList from "../views/AdminVideoList.vue";
+import AdminVideoEdit from "../views/AdminVideoEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,12 @@ const routes = [{
         path: '/admin/videos',
         name: "admin-video-list",
         component: AdminVideoList,
+    },
+    {
+        path: '/admin/videos/:id/edit',
+        name: "admin-video-edit",
+        component: AdminVideoEdit,
+        params: true
     },
     {
         path: '/video/create',
