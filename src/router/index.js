@@ -6,6 +6,8 @@ import VideoCreate from "../views/VideoCreate.vue";
 import VideoByTag from "../views/VideoByTag.vue";
 import AdminVideoList from "../views/AdminVideoList.vue";
 import AdminVideoEdit from "../views/AdminVideoEdit.vue";
+import AdminUserList from "../views/AdminUserList.vue";
+import UserLogin from "../views/UserLogin.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,11 @@ const routes = [{
         component: Home
     },
     {
+        path: '/login',
+        name: "user-login",
+        component: UserLogin,
+    },
+    {
         path: "/about",
         name: "about",
         // route level code-splitting
@@ -22,6 +29,11 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import( /* webpackChunkName: "about" */ "../views/About.vue")
+    },
+    {
+        path: '/admin/users',
+        name: "admin-user-list",
+        component: AdminUserList,
     },
     {
         path: '/admin/videos',
