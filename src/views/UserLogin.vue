@@ -1,17 +1,24 @@
 <template>
-	<div>
+	<v-container>
 		<v-form>
 			<v-text-field v-model="loginInfo.email" label="Email" type="email" />
-			<v-text-field v-model="loginInfo.password" label="Password" type="password" />
+			<v-text-field
+				v-model="loginInfo.password"
+				label="Password"
+				:type="showPassword ? 'text': 'password'"
+				:append-icon="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+				@click:append="showPassword = !showPassword"
+			/>
 			<v-btn @click="loginUser">Login</v-btn>
 		</v-form>
-	</div>
+	</v-container>
 </template>
 
 <script>
 export default {
 	data() {
 		return {
+			showPassword: false,
 			loginInfo: {
 				email: "",
 				password: ""
@@ -24,7 +31,7 @@ export default {
 			if (response.error) {
 				alert(response.error);
 			} else {
-				alert("Thank you for signing in, " + user.name);
+				alert("Thank you for signing in, " + response.name);
 			}
 		}
 	}
