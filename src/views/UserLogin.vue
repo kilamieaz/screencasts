@@ -1,33 +1,19 @@
 <template>
 	<v-container>
-		<v-form>
-			<v-text-field v-model="loginInfo.email" label="Email" type="email" />
-			<v-text-field
-				v-model="loginInfo.password"
-				label="Password"
-				:type="showPassword ? 'text': 'password'"
-				:append-icon="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
-				@click:append="showPassword = !showPassword"
-			/>
-			<v-btn @click="loginUser">Login</v-btn>
-		</v-form>
+		<UserForm :submitForm="loginUser" buttonText="Login"></UserForm>
 	</v-container>
 </template>
 
 <script>
+import UserForm from "@/components/UserForm";
 export default {
-	data() {
-		return {
-			showPassword: false,
-			loginInfo: {
-				email: "",
-				password: ""
-			}
-		};
+	components: {
+		UserForm
 	},
+
 	methods: {
-		async loginUser() {
-			let response = await this.$store.dispatch("loginUser", this.loginInfo);
+		async loginUser(loginInfo) {
+			let response = await this.$store.dispatch("loginUser", loginInfo);
 			if (response.error) {
 				alert(response.error);
 			} else {
