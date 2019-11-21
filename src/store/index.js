@@ -69,6 +69,10 @@ export default new Vuex.Store({
             await Api().get('/tags').then(response => commit('SET_TAGS', response.data.data));
             let playedVideos = JSON.parse(window.localStorage.playedVideos);
             commit('SET_PLAYED_VIDEOS', playedVideos);
+        },
+        async loadCurrentUser({
+            commit
+        }) {
             let currentUser = JSON.parse(window.localStorage.currentUser);
             commit('SET_CURRENT_USER', currentUser);
         },
@@ -130,8 +134,22 @@ export default new Vuex.Store({
                     error: "Username/password combination was incorrect. Please try again"
                 }
             }
-
+        },
+        async registerUser({
+            commit
+        }, registerInfo) {
+            try {
+                let response = await Api().post('/register', registerInfo)
+                let user = response.data.data
+                commit('SET_CURRENT_USER', user)
+                return user
+            } catch {
+                return {
+                    error: "There was an error. Please try again."
+                }
+            }
         }
+
     },
     modules: {},
     getters: {

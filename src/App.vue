@@ -14,9 +14,8 @@
 				</v-btn>
 			</div>
 			<div v-else>
-				<v-btn text>
-					<span class="mr-2">Login</span>
-				</v-btn>
+				<v-btn text to="/login">Login</v-btn>
+				<v-btn text to="/registration">Register</v-btn>
 			</div>
 		</v-app-bar>
 
@@ -36,6 +35,7 @@ export default {
 	// mounted is a life hook executed after the intance gets mounted
 	mounted() {
 		this.$store.dispatch("loadData");
+		this.$store.dispatch("loadCurrentUser");
 	},
 
 	computed: {

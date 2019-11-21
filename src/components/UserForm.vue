@@ -1,6 +1,13 @@
 <template>
 	<v-form v-model="valid">
 		<v-text-field
+			v-model="userInfo.name"
+			label="Name"
+			type="name"
+			:rules="[required('name')]"
+			v-if="hasName"
+		/>
+		<v-text-field
 			v-model="userInfo.email"
 			label="Email"
 			type="email"
@@ -33,6 +40,6 @@ export default {
 			...validations
 		};
 	},
-	props: ["submitForm", "buttonText"]
+	props: ["submitForm", "buttonText", "hasName"]
 };
 </script>
