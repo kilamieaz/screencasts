@@ -10,7 +10,8 @@ export default new Vuex.Store({
         tags: [],
         playedVideos: [],
         users: [],
-        currentUser: {}
+        currentUser: {},
+        token: [],
     },
     mutations: {
         SET_VIDEOS(state, videos) {
@@ -47,11 +48,17 @@ export default new Vuex.Store({
         },
         LOGOUT_USER(state) {
             state.currentUser = {};
+            state.token = [];
             window.localStorage.currentUser = JSON.stringify({});
+            window.localStorage.accessToken = JSON.stringify();
         },
         SET_CURRENT_USER(state, user) {
             state.currentUser = user;
             window.localStorage.currentUser = JSON.stringify(user);
+        },
+        SET_ACCESS_TOKEN(state, token) {
+            state.token = token;
+            window.localStorage.accessToken = JSON.stringify(token);
         }
     },
     actions: {
@@ -126,9 +133,9 @@ export default new Vuex.Store({
             //     })
             try {
                 let response = await Api().post('/login', loginInfo)
-                let user = response.data.data
-                commit('SET_CURRENT_USER', user)
-                return user
+                commit('SET_CURRENT_USER', response.data.user)
+                commit('SET_ACCESS_TOKEN', `${response.data.token_type} ${response.data.access_token}`)
+                return response.data.user
             } catch {
                 return {
                     error: "Username/password combination was incorrect. Please try again"

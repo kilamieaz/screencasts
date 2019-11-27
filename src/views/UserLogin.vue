@@ -15,10 +15,10 @@ export default {
 	methods: {
 		async loginUser(loginInfo) {
 			let response = await this.$store.dispatch("loginUser", loginInfo);
-			if (response.error) {
-				alert(response.error);
-			} else {
+			if (response.name) {
 				alert("Thank you for signing in, " + response.name);
+			} else {
+				alert(response.error);
 			}
 		}
 	}
