@@ -34,6 +34,7 @@ export default {
 
 	// mounted is a life hook executed after the intance gets mounted
 	mounted() {
+		this.$store.dispatch("init");
 		this.$store.dispatch("loadData");
 		this.$store.dispatch("loadCurrentUser");
 	},

@@ -25,6 +25,7 @@ export default new Vuex.Store({
         },
         SET_PLAYED_VIDEOS(state, playedVideos) {
             state.playedVideos = playedVideos;
+            window.localStorage.setItem('playedVideos', JSON.stringify([]));
         },
         MARK_VIDEO_PLAYED(state, videoId) {
             let playedVideos = state.playedVideos.concat(videoId)
@@ -50,18 +51,23 @@ export default new Vuex.Store({
             state.currentUser = {};
             state.token = [];
             window.localStorage.currentUser = JSON.stringify({});
-            window.localStorage.accessToken = JSON.stringify();
+            window.localStorage.accessToken = JSON.stringify([]);
         },
         SET_CURRENT_USER(state, user) {
             state.currentUser = user;
-            window.localStorage.currentUser = JSON.stringify(user);
+            window.localStorage.setItem('currentUser', JSON.stringify(user));
         },
         SET_ACCESS_TOKEN(state, token) {
             state.token = token;
-            window.localStorage.accessToken = JSON.stringify(token);
+            window.localStorage.setItem('accessToken', JSON.stringify(token));
         }
     },
     actions: {
+        async init() {
+            window.localStorage.setItem('playedVideos', JSON.stringify([]));
+            window.localStorage.setItem('currentUser', JSON.stringify({}));
+            window.localStorage.setItem('accessToken', JSON.stringify([]));
+        },
         async loadData({
             commit
         }) {
@@ -81,7 +87,9 @@ export default new Vuex.Store({
             commit
         }) {
             let currentUser = JSON.parse(window.localStorage.currentUser);
+            let accessToken = JSON.parse(window.localStorage.accessToken);
             commit('SET_CURRENT_USER', currentUser);
+            commit('SET_ACCESS_TOKEN', accessToken);
         },
         async loadUsers({
             commit

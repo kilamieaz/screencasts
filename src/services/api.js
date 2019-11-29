@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default () => {
-    let token = JSON.parse(window.localStorage.accessToken) || null;
+    let token = JSON.parse(window.localStorage.accessToken);
     return axios.create({
         baseURL: 'http://localhost:8000/api/v1',
         withCredentials: false,
