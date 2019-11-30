@@ -50,8 +50,8 @@ export default new Vuex.Store({
         LOGOUT_USER(state) {
             state.currentUser = {};
             state.token = [];
-            window.localStorage.currentUser = JSON.stringify({});
-            window.localStorage.accessToken = JSON.stringify([]);
+            window.localStorage.removeItem('currentUser');
+            window.localStorage.removeItem('accessToken');
         },
         SET_CURRENT_USER(state, user) {
             state.currentUser = user;
@@ -63,11 +63,6 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        async init() {
-            window.localStorage.setItem('playedVideos', JSON.stringify([]));
-            window.localStorage.setItem('currentUser', JSON.stringify({}));
-            window.localStorage.setItem('accessToken', JSON.stringify([]));
-        },
         async loadData({
             commit
         }) {
@@ -80,16 +75,17 @@ export default new Vuex.Store({
 
             await Api().get('/videos').then(response => commit('SET_VIDEOS', response.data.data));
             await Api().get('/tags').then(response => commit('SET_TAGS', response.data.data));
-            let playedVideos = JSON.parse(window.localStorage.playedVideos);
-            commit('SET_PLAYED_VIDEOS', playedVideos);
+            let playedVideos = window.localStorage.getItem('playedVideos');
+            commit('SET_PLAYED_VIDEOS', playedVideos === null ? '' : JSON.parse(playedVideos));
         },
         async loadCurrentUser({
             commit
         }) {
-            let currentUser = JSON.parse(window.localStorage.currentUser);
-            let accessToken = JSON.parse(window.localStorage.accessToken);
-            commit('SET_CURRENT_USER', currentUser);
-            commit('SET_ACCESS_TOKEN', accessToken);
+
+            let currentUser = window.localStorage.getItem('currentUser');
+            let accessToken = window.localStorage.getItem('accessToken');
+            commit('SET_CURRENT_USER', currentUser === null ? '' : JSON.parse(currentUser));
+            commit('SET_ACCESS_TOKEN', accessToken === null ? '' : JSON.parse(accessToken));
         },
         async loadUsers({
             commit
@@ -134,11 +130,6 @@ export default new Vuex.Store({
         async loginUser({
             commit
         }, loginInfo) {
-            // let response = await Api().post('/login', loginInfo)
-            //     .then(commit('SET_CURRENT_USER', response.data.data))
-            //     .catch({
-            //         error: "Username/password combination was incorrect. Please try agani"
-            //     })
             try {
                 let response = await Api().post('/login', loginInfo)
                 commit('SET_CURRENT_USER', response.data.user)
