@@ -63,6 +63,25 @@ export default new Vuex.Store({
         },
         SET_SNACKBAR(state, snackbar) {
             state.snackbars = state.snackbars.concat(snackbar);
+        },
+        CONNECT_TAG_TO_VIDEO(state, {
+            tag,
+            video
+        }) {
+            let videoFromState = state.videos.filter(v => v.id == video.id);
+            let tagFromState = state.tags.filter(t => t.id == tag.id);
+            videoFromState[0].tags.concat(tag);
+            tagFromState[0].videos.concat(video);
+        },
+        DISCONNECT_TAG_FROM_VIDEO(state, {
+            tag,
+            video
+        }) {
+            let videoFromState = state.videos.filter(v => v.id == video.id);
+            let tagFromState = state.tags.filter(t => t.id == tag.id);
+
+            videoFromState[0].tags.filter(t_id => t_id != tag.id);
+            tagFromState[0].videos.filter(v_id => v_id != video.id);
         }
     },
     actions: {
@@ -184,6 +203,29 @@ export default new Vuex.Store({
             snackbar.showing = true;
             snackbar.color = snackbar.color || 'success';
             commit('SET_SNACKBAR', snackbar);
+        },
+        connectTagToVideo({
+            commit
+        }, {
+            tag,
+            video
+        }) {
+            commit('CONNECT_TAG_TO_VIDEO', {
+                tag,
+                video
+            });
+        },
+        disconnectTagFromVideo({
+            commit
+        }, {
+            tag,
+            video
+        }) {
+            commit('DISCONNECT_TAG_FROM_VIDEO', {
+                tag,
+                video
+            });
+
         }
     },
     modules: {},
