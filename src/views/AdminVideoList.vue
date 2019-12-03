@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<h1>Video List</h1>
-		<v-btn text to="admin/video/add">Add Video</v-btn>
+		<v-btn text to="video/create">Add Video</v-btn>
 
 		<div class="flex-table">
 			<div>Name</div>
@@ -12,7 +12,8 @@
 			<div>{{video.name}}</div>
 			<div>{{video.description | abbreviate}}</div>
 			<div class="actions">
-				<router-link :to="{ name: 'video-watch', params: {id:video.id }}">Show</router-link>
+				<router-link :to="{ name: 'video-watch', params: {id:video.id }}">Watch</router-link>
+				<router-link :to="{ name: 'admin-video-show', params: {id:video.id }}">Show</router-link>
 				<router-link :to="{ name: 'admin-video-edit', params: {id:video.id }}">Edit</router-link>
 				<v-btn x-small @click="deleteVideo(video)">Delete</v-btn>
 			</div>

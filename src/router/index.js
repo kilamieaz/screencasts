@@ -10,6 +10,7 @@ import AdminUserList from "../views/AdminUserList.vue";
 import UserLogin from "../views/UserLogin.vue";
 import UserRegistration from "../views/UserRegistration.vue";
 import Admin from "../views/Admin.vue";
+import AdminVideoShow from "../views/AdminVideoShow.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,12 @@ const routes = [{
                 path: 'videos/:id/edit',
                 name: "admin-video-edit",
                 component: AdminVideoEdit,
+                params: true
+            },
+            {
+                path: 'videos/:id/show',
+                name: "admin-video-show",
+                component: AdminVideoShow,
                 params: true
             },
         ]
