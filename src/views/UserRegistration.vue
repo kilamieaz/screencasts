@@ -14,10 +14,16 @@ export default {
 	methods: {
 		async registerUser(registerInfo) {
 			let response = await this.$store.dispatch("registerUser", registerInfo);
-			if (response.error) {
-				alert(response.error);
+			if (response.name) {
+				this.$store.dispatch("setSnackbar", {
+					text: `Welcome to our app, ${response.name}`
+				});
+				this.$router.push("/");
 			} else {
-				alert("Welcome to our app, " + response.name);
+				this.$store.dispatch("setSnackbar", {
+					text: `${response.error}`,
+					color: "error"
+				});
 			}
 		}
 	}

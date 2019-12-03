@@ -6,7 +6,7 @@
 			</v-col>
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
-				<div class="green--text" v-if="isPlayed">
+				<div class="green--text" v-if="isPlayed(video.id)">
 					<v-row>
 						<v-col cols="1">
 							<v-icon class="green--text" small>fas fa-check</v-icon>
@@ -15,7 +15,7 @@
 					</v-row>
 				</div>
 				<div v-else>
-					<v-btn x-small @click="markPlayed">Mark Played</v-btn>
+					<v-btn x-small @click="markPlayed" v-if="currentUser.name">Mark Played</v-btn>
 				</div>
 				<div v-html="video.description"></div>
 				<span v-for="tag in video.tags" :key="tag.id">
@@ -34,13 +34,14 @@
 import "video.js/dist/video-js.css";
 
 import { videoPlayer } from "vue-video-player";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
 	components: {
 		videoPlayer
 	},
 	computed: {
-		...mapState(["playedVideos", "videos"]),
+		...mapGetters(["isPlayed"]),
+		...mapState(["videos", "currentUser"]),
 		video() {
 			return this.videos.find(vid => vid.id == this.$route.params.id);
 		},
@@ -59,9 +60,6 @@ export default {
 				poster: this.video.thumbnail,
 				fluid: true
 			};
-		},
-		isPlayed() {
-			return this.playedVideos.includes(this.video.id);
 		}
 	},
 	methods: {

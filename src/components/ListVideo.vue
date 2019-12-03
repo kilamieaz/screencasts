@@ -4,7 +4,7 @@
 			<v-img :src="video.thumbnail" alt />
 			<v-card-title>{{ video.name }}</v-card-title>
 			<v-card-text>
-				<div class="green--text" v-if="isPlayed">
+				<div class="green--text" v-if="isPlayed(video.id)">
 					<v-row>
 						<v-col cols="1">
 							<v-icon class="green--text" small>fas fa-check</v-icon>
@@ -30,11 +30,10 @@
 
 
 <script>
+import { mapGetters } from "vuex";
 export default {
 	computed: {
-		isPlayed() {
-			return this.$store.state.playedVideos.includes(this.video.id);
-		}
+		...mapGetters(["isPlayed"])
 	},
 	props: ["video"]
 };
