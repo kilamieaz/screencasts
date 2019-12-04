@@ -85,6 +85,12 @@ export default new Vuex.Store({
 
             Vue.set(videoFromState, 'tags', videoFromState.tags.filter(t => t.id != tag.id));
             Vue.set(tagFromState, 'videos', tagFromState.videos.filter(v => v.id != video.id));
+        },
+        CREATE_TAG(state, {
+            tag
+        }) {
+            let tags = state.tags.concat(tag);
+            state.tags = tags;
         }
     },
     actions: {
@@ -232,6 +238,21 @@ export default new Vuex.Store({
                 tag,
                 video
             });
+        },
+        async createTag({
+            commit
+        }, {
+            name
+        }) {
+            // response tag with videos
+            let response = await Api().post(`/tags`, {
+                name
+            });
+            let createdTag = response.data.data;
+            commit('CREATE_TAG', {
+                tag: createdTag
+            })
+            return createdTag
         }
     },
     modules: {},

@@ -2,7 +2,7 @@
 	<div v-if="video">
 		<div class="display-1 pt-3">{{ video.name }}</div>
 		<div v-html="video.description"></div>
-		<v-autocomplete
+		<v-combobox
 			:items="tags"
 			item-text="name"
 			v-model="videoTags"
@@ -11,7 +11,7 @@
 			deletable-chips
 			hide-selected
 			return-object
-		></v-autocomplete>
+		></v-combobox>
 	</div>
 </template>
 
@@ -29,20 +29,33 @@ export default {
 			get() {
 				return this.video.tags;
 			},
-			set(newTags) {
-				let addedTags = _.differenceBy(newTags, this.videoTags, "id");
-				let removeTags = _.differenceBy(this.videoTags, newTags, "id");
-				if (addedTags.length > 0) {
+			async set(newTags) {
+				// allows the user to enter tag that do not exist and create the new tag
+				let createTag = newTags.find(t => typeof t === "string");
+
+				if (createTag) {
+					let createdTag = await this.$store.dispatch("createTag", {
+						name: createTag
+					});
 					this.$store.dispatch("connectTagToVideo", {
-						tag: addedTags[0],
+						tag: createdTag,
 						video: this.video
 					});
-				}
-				if (removeTags.length > 0) {
-					this.$store.dispatch("disconnectTagFromVideo", {
-						tag: removeTags[0],
-						video: this.video
-					});
+				} else {
+					let addedTags = _.differenceBy(newTags, this.videoTags, "id");
+					let removeTags = _.differenceBy(this.videoTags, newTags, "id");
+					if (addedTags.length > 0) {
+						this.$store.dispatch("connectTagToVideo", {
+							tag: addedTags[0],
+							video: this.video
+						});
+					}
+					if (removeTags.length > 0) {
+						this.$store.dispatch("disconnectTagFromVideo", {
+							tag: removeTags[0],
+							video: this.video
+						});
+					}
 				}
 			}
 		}
