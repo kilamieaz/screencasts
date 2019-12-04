@@ -68,20 +68,23 @@ export default new Vuex.Store({
             tag,
             video
         }) {
-            let videoFromState = state.videos.filter(v => v.id == video.id);
-            let tagFromState = state.tags.filter(t => t.id == tag.id);
-            videoFromState[0].tags.concat(tag);
-            tagFromState[0].videos.concat(video);
+            let videoFromState = state.videos.find(v => v.id == video.id);
+            let tagFromState = state.tags.find(t => t.id == tag.id);
+
+            Vue.set(videoFromState, 'tags', videoFromState.tags.concat(tag));
+            Vue.set(tagFromState, 'videos', tagFromState.videos.concat(video));
+            // videoFromState.tags = videoFromState.tags.concat(tag);
+            // tagFromState.videos = tagFromState.videos.concat(video);
         },
         DISCONNECT_TAG_FROM_VIDEO(state, {
             tag,
             video
         }) {
-            let videoFromState = state.videos.filter(v => v.id == video.id);
-            let tagFromState = state.tags.filter(t => t.id == tag.id);
+            let videoFromState = state.videos.find(v => v.id == video.id);
+            let tagFromState = state.tags.find(t => t.id == tag.id);
 
-            videoFromState[0].tags.filter(t_id => t_id != tag.id);
-            tagFromState[0].videos.filter(v_id => v_id != video.id);
+            Vue.set(videoFromState, 'tags', videoFromState.tags.filter(t => t.id != tag.id));
+            Vue.set(tagFromState, 'videos', tagFromState.videos.filter(v => v.id != video.id));
         }
     },
     actions: {
@@ -204,28 +207,31 @@ export default new Vuex.Store({
             snackbar.color = snackbar.color || 'success';
             commit('SET_SNACKBAR', snackbar);
         },
-        connectTagToVideo({
+        async connectTagToVideo({
             commit
         }, {
             tag,
             video
         }) {
+            await Api().post(`/videos/${video.id}/tags`, {
+                tag_id: tag.id
+            });
             commit('CONNECT_TAG_TO_VIDEO', {
                 tag,
                 video
             });
         },
-        disconnectTagFromVideo({
+        async disconnectTagFromVideo({
             commit
         }, {
             tag,
             video
         }) {
+            await Api().delete(`/videos/${video.id}/tags/${tag.id}`);
             commit('DISCONNECT_TAG_FROM_VIDEO', {
                 tag,
                 video
             });
-
         }
     },
     modules: {},
