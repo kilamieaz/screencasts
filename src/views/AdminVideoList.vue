@@ -62,7 +62,7 @@ export default {
 
 	.actions {
 		* {
-			padding: 15px;
+			padding-right: 15px;
 		}
 	}
 }

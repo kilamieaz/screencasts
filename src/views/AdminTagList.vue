@@ -20,8 +20,9 @@
 			<router-link :to="{ name: 'tag', params: { id: tag.id }}">
 				<div>{{ tag.videos.length }}</div>
 			</router-link>
-			<div>
+			<div class="actions">
 				<v-btn x-small @click="setToEditing(tag)">Edit</v-btn>
+				<v-btn x-small @click="deleteTag(tag)">Delete</v-btn>
 			</div>
 		</div>
 	</div>
@@ -48,6 +49,14 @@ export default {
 		updateTag(tag) {
 			this.tagEditingId = "";
 			this.$store.dispatch("updateTag", { tag });
+		},
+		deleteTag(tag) {
+			let confirmed = confirm(
+				`Are you sure you want to delete tag ${tag.name}? It is connected to ${tag.videos.length} videos.`
+			);
+			if (confirmed) {
+				this.$store.dispatch("deleteTag", { tag });
+			}
 		}
 	}
 };
@@ -66,7 +75,7 @@ export default {
 
 	.actions {
 		* {
-			padding: 15px;
+			margin-right: 15px;
 		}
 	}
 }

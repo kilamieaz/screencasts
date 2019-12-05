@@ -97,6 +97,11 @@ export default new Vuex.Store({
         }) {
             let updateTag = state.tags.find(t => t.id == tag.id)
             updateTag.name = tag.name
+        },
+        DELETE_TAG(state, {
+            tag
+        }) {
+            state.tags = state.tags.filter(t => t.id != tag.id)
         }
     },
     actions: {
@@ -269,6 +274,16 @@ export default new Vuex.Store({
                 name: tag.name
             })
             commit('UPDATE_TAG', {
+                tag
+            })
+        },
+        async deleteTag({
+            commit
+        }, {
+            tag
+        }) {
+            Api().delete(`/tags/${tag.id}`)
+            commit('DELETE_TAG', {
                 tag
             })
         }
