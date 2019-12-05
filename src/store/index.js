@@ -91,6 +91,12 @@ export default new Vuex.Store({
         }) {
             let tags = state.tags.concat(tag);
             state.tags = tags;
+        },
+        UPDATE_TAG(state, {
+            tag
+        }) {
+            let updateTag = state.tags.find(t => t.id == tag.id)
+            updateTag.name = tag.name
         }
     },
     actions: {
@@ -253,6 +259,18 @@ export default new Vuex.Store({
                 tag: createdTag
             })
             return createdTag
+        },
+        async updateTag({
+            commit
+        }, {
+            tag
+        }) {
+            Api().put(`/tags/${tag.id}`, {
+                name: tag.name
+            })
+            commit('UPDATE_TAG', {
+                tag
+            })
         }
     },
     modules: {},
