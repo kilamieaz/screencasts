@@ -46,13 +46,14 @@ export default {
 
 	// mounted is a life hook executed after the intance gets mounted
 	mounted() {
-		this.$store.dispatch("loadData");
-		this.$store.dispatch("loadCurrentUser");
+		this.$store.dispatch("videos/loadAll");
+		this.$store.dispatch("tags/loadAll");
+		this.$store.dispatch("users/loadCurrent");
 	},
 
 	computed: {
 		...mapState({
-			currentUser: "currentUser",
+			currentUser: state => state.users.currentUser,
 			snackbars: state => state.snackbars.snackbars
 		})
 	},
@@ -62,7 +63,7 @@ export default {
 	}),
 	methods: {
 		logoutUser() {
-			this.$store.dispatch("logoutUser");
+			this.$store.dispatch("users/logout");
 		}
 	}
 };

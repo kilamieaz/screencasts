@@ -2,11 +2,11 @@
 	<v-container v-if="video">
 		<v-row>
 			<v-col md="9" cols="12">
-				<video-player ref="videoPlayer" :options="playerOptions" @ended="markPlayed"></video-player>
+				<video-player ref="videoPlayer" :options="playerOptions" @ended="markVideoPlayed"></video-player>
 			</v-col>
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
-				<div class="green--text" v-if="isPlayed(video.id)">
+				<div class="green--text" v-if="videoIsPlayed(video.id)">
 					<v-row>
 						<v-col cols="1">
 							<v-icon class="green--text" small>fas fa-check</v-icon>
@@ -15,7 +15,7 @@
 					</v-row>
 				</div>
 				<div v-else>
-					<v-btn x-small @click="markPlayed" v-if="currentUser.name">Mark Played</v-btn>
+					<v-btn x-small @click="markVideoPlayed" v-if="currentUser.name">Mark Played</v-btn>
 				</div>
 				<div v-html="video.description"></div>
 				<span v-for="tag in video.tags" :key="tag.id">
@@ -40,8 +40,11 @@ export default {
 		videoPlayer
 	},
 	computed: {
-		...mapGetters(["isPlayed"]),
-		...mapState(["videos", "currentUser"]),
+		...mapGetters({ videoIsPlayed: "users/videoIsPlayed" }),
+		...mapState({
+			videos: state => state.videos.videos,
+			currentUser: state => state.users.currentUser
+		}),
 		video() {
 			return this.videos.find(vid => vid.id == this.$route.params.id);
 		},
@@ -63,8 +66,8 @@ export default {
 		}
 	},
 	methods: {
-		markPlayed() {
-			this.$store.dispatch("markPlayed", this.video.id);
+		markVideoPlayed() {
+			this.$store.dispatch("users/markVideoPlayed", this.video.id);
 		}
 	}
 };

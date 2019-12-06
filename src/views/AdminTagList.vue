@@ -47,7 +47,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(["tags"])
+		...mapState({ tags: state => state.tags.tags })
 	},
 	methods: {
 		setToEditing(tag) {
@@ -58,14 +58,14 @@ export default {
 		},
 		updateTag(tag) {
 			this.tagEditingId = "";
-			this.$store.dispatch("updateTag", { tag });
+			this.$store.dispatch("tags/update", { tag });
 		},
 		deleteTag(tag) {
 			let confirmed = confirm(
 				`Are you sure you want to delete tag ${tag.name}? It is connected to ${tag.videos.length} videos.`
 			);
 			if (confirmed) {
-				this.$store.dispatch("deleteTag", { tag });
+				this.$store.dispatch("tags/delete", { tag });
 			}
 		},
 		startCreatingTag() {
@@ -76,7 +76,7 @@ export default {
 		},
 		createTag() {
 			if (this.data.name.length > 0) {
-				this.$store.dispatch("createTag", { name: this.data.name });
+				this.$store.dispatch("tags/create", { name: this.data.name });
 				this.data.name = "";
 			}
 			this.isCreatingNewTag = false;

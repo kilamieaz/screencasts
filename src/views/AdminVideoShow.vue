@@ -21,7 +21,10 @@ import _ from "lodash";
 
 export default {
 	computed: {
-		...mapState(["videos", "tags"]),
+		...mapState({
+			videos: state => state.videos.videos,
+			tags: state => state.tags.tags
+		}),
 		video() {
 			return this.videos.find(v => v.id == this.$route.params.id);
 		},
@@ -34,10 +37,10 @@ export default {
 				let createTag = newTags.find(t => typeof t === "string");
 
 				if (createTag) {
-					let createdTag = await this.$store.dispatch("createTag", {
+					let createdTag = await this.$store.dispatch("tags/create", {
 						name: createTag
 					});
-					this.$store.dispatch("connectTagToVideo", {
+					this.$store.dispatch("tags/connectToVideo", {
 						tag: createdTag,
 						video: this.video
 					});
@@ -45,13 +48,13 @@ export default {
 					let addedTags = _.differenceBy(newTags, this.videoTags, "id");
 					let removeTags = _.differenceBy(this.videoTags, newTags, "id");
 					if (addedTags.length > 0) {
-						this.$store.dispatch("connectTagToVideo", {
+						this.$store.dispatch("tags/connectToVideo", {
 							tag: addedTags[0],
 							video: this.video
 						});
 					}
 					if (removeTags.length > 0) {
-						this.$store.dispatch("disconnectTagFromVideo", {
+						this.$store.dispatch("tags/disconnectFromVideo", {
 							tag: removeTags[0],
 							video: this.video
 						});

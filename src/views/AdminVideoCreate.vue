@@ -27,7 +27,7 @@ export default {
 	},
 	methods: {
 		async createVideo() {
-			let video = await this.$store.dispatch("createVideo", this.video);
+			let video = await this.$store.dispatch("videos/create", this.video);
 			this.$router.push({ name: "video-watch", params: { id: video.id } });
 		}
 	}

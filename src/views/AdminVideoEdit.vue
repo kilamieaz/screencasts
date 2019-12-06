@@ -12,14 +12,14 @@ export default {
 		VideoForm
 	},
 	computed: {
-		...mapState(["videos"]),
+		...mapState({ videos: state => state.videos.videos }),
 		video() {
 			return this.videos.find(v => v.id == this.$route.params.id);
 		}
 	},
 	methods: {
 		async saveVideo() {
-			let video = await this.$store.dispatch("editVideo", this.video);
+			let video = await this.$store.dispatch("videos/edit", this.video);
 			this.$store.dispatch("snackbars/setSnackbar", {
 				text: `You have successfully edited your video, ${video.name}`
 			});

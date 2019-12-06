@@ -21,10 +21,10 @@ export default {
 	// computed is an object containing methods that ret urn data
 	computed: {
 		//map to state this.$store.state.videos;
-		...mapState(["videos"])
-		// videos() {
-		// 	return this.$store.state.videos;
-		// }
+		...mapState({
+			videos: state => state.videos.videos,
+			tags: state => state.tags.tags
+		})
 	}
 };
 </script>

@@ -14,7 +14,7 @@ export default {
 
 	methods: {
 		async loginUser(loginInfo) {
-			let response = await this.$store.dispatch("loginUser", loginInfo);
+			let response = await this.$store.dispatch("users/login", loginInfo);
 			if (response.name) {
 				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `Thank you for signing in, ${response.name}`

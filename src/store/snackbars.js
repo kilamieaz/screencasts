@@ -2,7 +2,6 @@ export default {
     namespaced: true,
     state: {
         snackbars: []
-
     },
     mutations: {
         SET_SNACKBAR(state, snackbar) {

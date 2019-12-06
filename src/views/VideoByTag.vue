@@ -18,7 +18,7 @@ export default {
 		ListVideo
 	},
 	computed: {
-		...mapGetters(["getTag"]),
+		...mapGetters({ getTag: "tags/get" }),
 		tag() {
 			return this.getTag(this.$route.params.id);
 		}

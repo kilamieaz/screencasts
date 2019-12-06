@@ -13,7 +13,7 @@ export default {
 	},
 	methods: {
 		async registerUser(registerInfo) {
-			let response = await this.$store.dispatch("registerUser", registerInfo);
+			let response = await this.$store.dispatch("users/register", registerInfo);
 			if (response.name) {
 				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `Welcome to our app, ${response.name}`

@@ -25,7 +25,7 @@
 import { mapState } from "vuex";
 export default {
 	computed: {
-		...mapState(["videos"])
+		...mapState({ videos: state => state.videos.videos })
 	},
 	filters: {
 		abbreviate(text) {
@@ -39,7 +39,7 @@ export default {
 		deleteVideo(video) {
 			let response = confirm(`Are you sure you want to delete ${video.name}`);
 			if (response) {
-				this.$store.dispatch("deleteVideo", video);
+				this.$store.dispatch("videos/delete", video);
 				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `You have successfully deleted your video, ${video.name}`
 				});
