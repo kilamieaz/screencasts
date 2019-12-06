@@ -15,12 +15,12 @@ export default {
 		async registerUser(registerInfo) {
 			let response = await this.$store.dispatch("registerUser", registerInfo);
 			if (response.name) {
-				this.$store.dispatch("setSnackbar", {
+				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `Welcome to our app, ${response.name}`
 				});
 				this.$router.push("/");
 			} else {
-				this.$store.dispatch("setSnackbar", {
+				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `${response.error}`,
 					color: "error"
 				});

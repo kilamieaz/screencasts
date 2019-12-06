@@ -16,7 +16,7 @@ export default {
 		async loginUser(loginInfo) {
 			let response = await this.$store.dispatch("loginUser", loginInfo);
 			if (response.name) {
-				this.$store.dispatch("setSnackbar", {
+				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `Thank you for signing in, ${response.name}`
 				});
 				if (response.id == 1) {
@@ -24,7 +24,7 @@ export default {
 				}
 				this.$router.push("/");
 			} else {
-				this.$store.dispatch("setSnackbar", {
+				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `${response.error}`,
 					color: "error"
 				});

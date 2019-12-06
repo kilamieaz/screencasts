@@ -40,7 +40,7 @@ export default {
 			let response = confirm(`Are you sure you want to delete ${video.name}`);
 			if (response) {
 				this.$store.dispatch("deleteVideo", video);
-				this.$store.dispatch("setSnackbar", {
+				this.$store.dispatch("snackbars/setSnackbar", {
 					text: `You have successfully deleted your video, ${video.name}`
 				});
 			}

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Api from "@/services/api";
+import snackbarsModule from "./snackbars"
 
 Vue.use(Vuex);
 
@@ -11,8 +12,11 @@ export default new Vuex.Store({
         users: [],
         currentUser: {},
         token: [],
-        snackbars: []
     },
+    modules: {
+        snackbars: snackbarsModule
+    },
+
     mutations: {
         SET_VIDEOS(state, videos) {
             state.videos = videos;
@@ -61,9 +65,7 @@ export default new Vuex.Store({
             state.token = token;
             window.localStorage.setItem('accessToken', JSON.stringify(token));
         },
-        SET_SNACKBAR(state, snackbar) {
-            state.snackbars = state.snackbars.concat(snackbar);
-        },
+
         CONNECT_TAG_TO_VIDEO(state, {
             tag,
             video
@@ -217,13 +219,6 @@ export default new Vuex.Store({
                 }
             }
         },
-        setSnackbar({
-            commit
-        }, snackbar) {
-            snackbar.showing = true;
-            snackbar.color = snackbar.color || 'success';
-            commit('SET_SNACKBAR', snackbar);
-        },
         async connectTagToVideo({
             commit
         }, {
@@ -288,7 +283,6 @@ export default new Vuex.Store({
             })
         }
     },
-    modules: {},
     getters: {
         getTag: state => id => {
             return state.tags.find(tag => tag.id == id);

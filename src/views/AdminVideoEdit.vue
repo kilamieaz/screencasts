@@ -20,7 +20,7 @@ export default {
 	methods: {
 		async saveVideo() {
 			let video = await this.$store.dispatch("editVideo", this.video);
-			this.$store.dispatch("setSnackbar", {
+			this.$store.dispatch("snackbars/setSnackbar", {
 				text: `You have successfully edited your video, ${video.name}`
 			});
 			this.$router.push({ name: "admin-video-list" });

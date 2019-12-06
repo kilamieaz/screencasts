@@ -51,7 +51,10 @@ export default {
 	},
 
 	computed: {
-		...mapState(["currentUser", "snackbars"])
+		...mapState({
+			currentUser: "currentUser",
+			snackbars: state => state.snackbars.snackbars
+		})
 	},
 
 	data: () => ({
